@@ -15,7 +15,7 @@ const createOptions = (emailToSend, randomStamp) => {
     from: process.env.EMAIL_ACCOUNT,
     to: emailToSend,
     subject: 'Confirm email account',
-    html: '<a href="http://localhost:4000/email/confirm/' + randomStamp + '"> Confirm your account</a>'
+    html: `<a href="http://localhost:4000/email/confirm/${randomStamp}">Confirm your account</a>`
   }
 
 }
