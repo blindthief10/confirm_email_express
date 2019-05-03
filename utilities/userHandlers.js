@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-const userModel = require('../models/userModel.js');
+const dotenv = require('dotenv').config();
+const {createOptions, transporter} = require('./emailOptions');
+const userModel = require('../models/userModel');
 
 const createUserHandler = async (req, res, next) => {
   try {
@@ -9,7 +11,10 @@ const createUserHandler = async (req, res, next) => {
     req.body.temporaryToken = createTimestamp.toString() + createMathRandom.toString();
     await userModel.create(req.body);
 
-    res.status(201).json({message: 'User was created succesfully. We have sent you a confirmation email'})
+    const mailOptions = createOptions(req.body.email, req.body.temporaryToken);
+
+    await transporter.sendMail(mailOptions);
+    res.status(201).json({message: 'User was created succesfully. We have sent you a confirmation email'});
   }catch(error) {
     next(error);
   }

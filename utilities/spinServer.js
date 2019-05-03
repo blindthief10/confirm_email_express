@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const userRoute = require('../routes/userRoute');
 const errorHandler = require('../utilities/errorHandler');
+const emailRoute = require('../routes/emailRoute');
 const dotenv = require('dotenv').config();
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use('/users', userRoute);
+app.use('/email', emailRoute);
 app.use(errorHandler);
 
 module.exports = spinServer;
